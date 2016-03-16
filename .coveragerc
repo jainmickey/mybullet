@@ -1,0 +1,3 @@
+[run]
+source = mybullet/
+omit = '*tests*,*commands*,*migrations*,*admin*,*wsgi*'

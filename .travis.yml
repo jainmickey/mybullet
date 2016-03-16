@@ -1,0 +1,39 @@
+language: python
+sudo: false
+python:
+- 3.5
+
+addons:
+  postgresql: "9.4"
+
+before_script:
+- export DATABASE_URL=postgres://postgres@localhost/mybullet
+- psql -c "CREATE DATABASE mybullet;" -U postgres
+
+
+install:
+  - pip install ansible
+  - pip install -r requirements/development.txt
+
+script:
+- flake8
+- py.test --cov -v --tb=native
+- ansible-playbook -i provisioner/hosts provisioner/site.yml --syntax-check
+
+notifications:
+  email:
+    on_success: change  # [always|never|change]
+    on_failure: always  # [always|never|change]
+deploy:
+  provider: heroku
+  buildpack: python
+  strategy: api
+  api_key:
+    # travis encrypt $(heroku auth:token) --add deploy.api_key
+    secure: <add_heroku_auth_token_here>
+  app:
+    master: mybullet-dev
+    qa: mybullet-qa
+    prod: mybullet-prod
+  on:
+    repo: jainmickey/mybullet

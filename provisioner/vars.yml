@@ -1,0 +1,9 @@
+---
+project_name: mybullet
+project_repo_url: git@github.com:jainmickey/mybullet.git
+project_repo_remote: origin
+domain_name: mybullet.com
+repo_version: master
+python3: True
+py_venv_version: 3.5
+pg_gis: False

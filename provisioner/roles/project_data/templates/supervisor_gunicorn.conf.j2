@@ -1,0 +1,7 @@
+[program:gunicorn]
+command={{ venv_path }}/bin/gunicorn -c {{ gunicorn_conf_path }}/gunicorn.conf.py wsgi:application {% if vm %}--reload{% endif %}
+directory={{ project_path }}
+user={{ user }}
+stdout_logfile=/var/log/gunicorn.log
+stderr_logfile=/var/log/gunicorn.log
+
